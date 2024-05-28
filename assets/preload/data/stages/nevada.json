@@ -2,14 +2,14 @@
   "props": [
     {
       "name": "bg",
-      "assetPath": "nevada/red",
+      "assetPath": "red",
       "position": [-350, -300],
       "scroll": [0.9, 0.9],
       "zIndex": 10
     },
     {
       "name": "stageFront",
-      "assetPath": "nevada/island_but_dumb",
+      "assetPath": "island_but_dumb",
       "position": [-1100, -460],
       "scroll": [0.9, 0.9],
       "zIndex": 20
@@ -22,7 +22,7 @@
   "characters": {
     "bf": {
       "zIndex": 200,
-      "position": [1030, 450],
+      "position": [1030, 850],
       "cameraOffsets": [-100, -100]
     },
 
@@ -34,8 +34,8 @@
 
     "dad": {
       "zIndex": 200,
-      "position": [100, 100],
-      "cameraOffsets": [150, 300]
+      "position": [100, 850],
+      "cameraOffsets": [-100, -100]
     }
   },
 

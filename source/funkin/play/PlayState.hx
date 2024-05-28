@@ -1765,8 +1765,8 @@ class PlayState extends MusicBeatSubState
 
     // Position the player strumline on the right half of the screen
     playerStrumline.x = FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
-    // playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET; // Centered style thanis ninha muffin
-    if (Preferences.middlescroll) playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET;
+    // playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET; // Centered style
+    if (Preferences.middlescroll) playerStrumline.x = playerStrumline.x = FlxG.width / 2 - playerStrumline.width / 2;
 
     playerStrumline.y = Preferences.downscroll ? FlxG.height - playerStrumline.height - Constants.STRUMLINE_Y_OFFSET : Constants.STRUMLINE_Y_OFFSET;
     playerStrumline.zIndex = 1001;
