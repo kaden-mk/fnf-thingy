@@ -115,7 +115,6 @@ class ChartEditorDropdowns
     // Weeks 1-7
     "mom" => "Mom Sings (Week 5)",
     "ugh" => "Ugh (Week 7)",
-    "tricky-death" => "Tricky Death Notes",
     "hehPrettyGood" => "Heh, Pretty Good (Week 7)",
     // Weekend 1
     "weekend-1-punchhigh" => "Punch High (Blazin')",
