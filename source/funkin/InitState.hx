@@ -58,6 +58,7 @@ class InitState extends FlxState
     // Flixel has already loaded the save data, so we can just use it.
     Preferences.init();
     DisableUi.init();
+    CustomizeUi.init();
 
     // Load controls from save data.
     PlayerSettings.init();

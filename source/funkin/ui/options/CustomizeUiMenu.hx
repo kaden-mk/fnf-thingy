@@ -6,16 +6,20 @@ import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import funkin.ui.AtlasText.AtlasFont;
 import funkin.ui.options.OptionsState.Page;
+import funkin.ui.options.OptionsState.PageName;
 import funkin.graphics.FunkinCamera;
 import funkin.ui.TextMenuList.TextMenuItem;
 import funkin.ui.options.PreferencesMenu.CheckboxPreferenceItem;
 
-/**
- * Since this is an entirely new Menu I'll explain what it does, it's basically like preferences but you can disable elements of ui.
- * Examples are like, the icons on the healthbar, the healthbar itself, score text, etc.
- */
-class DisableUiMenu extends Page
+class CustomizeUiMenu extends Page
 {
+  var pages = new Map<PageName, Page>();
+  var currentName:PageName = Options;
+  var currentPage(get, never):Page;
+
+  inline function get_currentPage():Page
+    return pages[currentName];
+
   var items:TextMenuList;
   var uiItems:FlxTypedSpriteGroup<FlxSprite>;
 
@@ -54,34 +58,34 @@ class DisableUiMenu extends Page
    */
   function createUiItems():Void
   {
-    createUiItemCheckbox('Health bar', 'Toggle the health bar.', function(value:Bool):Void {
-      DisableUi.healthbar = value;
-    }, DisableUi.healthbar);
-
-    createUiItemCheckbox('Icons', 'Toggle the Icons on the health bar.', function(value:Bool):Void {
-      DisableUi.icons = value;
-    }, DisableUi.icons);
-
-    createUiItemCheckbox('Score Info', 'Toggle the score information under the health bar.', function(value:Bool):Void {
-      DisableUi.score = value;
-    }, DisableUi.score);
-
-    createUiItemCheckbox('Combo Number', 'Toggle the combo number.', function(value:Bool):Void {
-      DisableUi.comboNumber = value;
-    }, DisableUi.comboNumber);
-
-    createUiItemCheckbox('Rating', 'Toggle the rating from hitting a note.', function(value:Bool):Void {
-      DisableUi.rating = value;
-    }, DisableUi.rating);
-
-    createUiItemCheckbox('Opponent Notes', 'Toggle the opponent notes.', function(value:Bool):Void {
-      DisableUi.oppNotes = value;
-    }, DisableUi.oppNotes);
+    createItem('Disable UI', function() switchPage(DisableUi));
+   // createUiItem('Customize Positions');
   }
 
-  function createUiItem(prefName:String, prefDesc:String):Void
+  function createItem(name:String, callback:Void->Void, fireInstantly = false)
   {
-    items.createItem(120, (120 * items.length), prefName, AtlasFont.BOLD);
+    var item = items.createItem(120, (120 * items.length), name, AtlasFont.BOLD, callback);
+    item.fireInstantly = fireInstantly;
+    //item.screenCenter(X);
+
+    return item;
+  }
+
+  function createUiItem(prefName:String, opensMenu, page):Void
+  {
+    items.createItem(120, (120 * items.length), prefName, AtlasFont.BOLD, function() {
+      var pageObject = addPage(page, opensMenu);
+
+    });
+  }
+
+  function addPage<T:Page>(name:PageName, page:T)
+  {
+    page.onSwitch.add(switchPage);
+    pages[name] = page;
+    add(page);
+    page.exists = currentName == name;
+    return page;
   }
 
   function createUiItemCheckbox(prefName:String, prefDesc:String, onChange:Bool->Void, defaultValue:Bool):Void

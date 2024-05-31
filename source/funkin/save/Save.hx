@@ -80,6 +80,9 @@ class Save
         },
       options:
         {
+          // 1
+          cust: true,
+
           // Disable Ui
           healthbar: true,
           icons: true,
@@ -855,6 +858,8 @@ typedef SaveDataOptions =
    * @default `true`
    */
   var healthbar:Bool;
+
+  var cust:Bool;
 
   /**
    * Whether the icons on the health bar ui is visible.

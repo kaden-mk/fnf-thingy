@@ -42,13 +42,15 @@ class OptionsState extends MusicBeatState
     var preferences = addPage(Preferences, new PreferencesMenu());
     var controls = addPage(Controls, new ControlsMenu());
     var disableUi = addPage(DisableUi, new DisableUiMenu());
+    var customizeUi = addPage(CustomizeUi, new CustomizeUiMenu());
 
     if (options.hasMultipleOptions())
     {
       options.onExit.add(exitToMainMenu);
       controls.onExit.add(exitControls);
       preferences.onExit.add(switchPage.bind(Options));
-      disableUi.onExit.add(exitControls);
+      disableUi.onExit.add(exitToCustomize);
+      customizeUi.onExit.add(exitControls);
     }
     else
     {
@@ -115,6 +117,11 @@ class OptionsState extends MusicBeatState
     currentPage.enabled = false;
     // TODO: Animate this transition?
     FlxG.switchState(() -> new MainMenuState());
+  }
+
+  function exitToCustomize()
+  {
+    switchPage(CustomizeUi);
   }
 }
 
@@ -196,7 +203,7 @@ class OptionsMenu extends Page
     createItem("INPUT OFFSETS", function() {
       FlxG.state.openSubState(new LatencyState());
     });
-    createItem("DISABLE UI", function() switchPage(DisableUi));
+    createItem("CUSTOMISE UI", function() switchPage(CustomizeUi));
 
     #if newgrounds
     if (NGio.isLoggedIn) createItem("LOGOUT", selectLogout);
@@ -277,4 +284,5 @@ enum PageName
   Mods;
   Preferences;
   DisableUi;
+  CustomizeUi;
 }
