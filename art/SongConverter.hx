@@ -173,8 +173,6 @@ class SongConverter
         return 'schoolEvil';
       case 'guns' | 'stress' | 'ugh':
         return 'tank';
-      case 'improbable-outset':
-        return 'nevada';
       default:
         return 'stage';
     }

@@ -111,8 +111,6 @@ class SaveDataMigrator
     migrateLegacySongScore(result, inputSaveData, ['ugh', 'Ugh']);
     migrateLegacySongScore(result, inputSaveData, ['guns', 'Guns']);
     migrateLegacySongScore(result, inputSaveData, ['stress', 'Stress']);
-
-    migrateLegacySongScore(result, inputSaveData, ['improbable-outset', 'Improbable Outset']);
   }
 
   static function migrateLegacyLevelScore(result:Save, inputSaveData:RawSaveData_v1_0_0, levelId:String):Void
