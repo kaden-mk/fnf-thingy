@@ -120,9 +120,9 @@ class MainMenuState extends MusicBeatState
       startExitState(() -> new funkin.ui.options.OptionsState());
     });
 
-    // createMenuItem('credits', 'mainmenu/credits', function() {
-    //   startExitState(() -> new funkin.ui.credits.CreditsState());
-    // });
+     createMenuItem('credits', 'mainmenu/credits', function() {
+       startExitState(() -> new funkin.ui.credits.CreditsState());
+     });
 
     // Reset position of menu items.
     var spacing = 160;

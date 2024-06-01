@@ -1533,17 +1533,18 @@ class PlayState extends MusicBeatSubState
     healthBarBG.screenCenter(X);
     healthBarBG.scrollFactor.set(0, 0);
     healthBarBG.zIndex = 800;
+    add(healthBarBG);
 
     healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
       'healthLerp', 0, 2);
     healthBar.scrollFactor.set();
     healthBar.createFilledBar(Constants.COLOR_HEALTH_BAR_RED, Constants.COLOR_HEALTH_BAR_GREEN);
     healthBar.zIndex = 801;
+    add(healthBar);
 
-    if (DisableUi.healthbar)
-    {
-      add(healthBarBG);
-      add(healthBar);
+    if (!DisableUi.healthbar) {
+      healthBarBG.visible = false;
+      healthBar.visible = false;
     }
 
     // The score text below the health bar.
@@ -1565,6 +1566,8 @@ class PlayState extends MusicBeatSubState
    */
   function initStage():Void
   {
+    // TODO: Maybe add an option so it doesnt load the stage
+
     loadStage(currentStageId);
   }
 
