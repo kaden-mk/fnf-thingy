@@ -823,6 +823,7 @@ class PlayState extends MusicBeatSubState
     var list = FlxG.sound.list;
     updateHealthBar();
     updateScoreText();
+    cameraLerp();
 
     // Handle restarting the song when needed (player death or pressing Retry)
     if (needsReset)
@@ -1542,7 +1543,8 @@ class PlayState extends MusicBeatSubState
     healthBar.zIndex = 801;
     add(healthBar);
 
-    if (!DisableUi.healthbar) {
+    if (!DisableUi.healthbar)
+    {
       healthBarBG.visible = false;
       healthBar.visible = false;
     }
@@ -3103,6 +3105,8 @@ class PlayState extends MusicBeatSubState
     // Clear the static reference to this state.
     instance = null;
   }
+
+  function cameraLerp():Void {}
 
   /**
    * Play the camera zoom animation and then move to the results screen once it's done.
