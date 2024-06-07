@@ -5,6 +5,7 @@
   "assetPath": "characters/BOYFRIEND",
   "flipX": true,
   "singTime": 8.0,
+  "bar_color": [49, 176, 209],
   "animations": [
     {
       "name": "idle",

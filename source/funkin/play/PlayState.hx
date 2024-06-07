@@ -36,6 +36,7 @@ import funkin.input.PreciseInputManager;
 import funkin.modding.events.ScriptEvent;
 import funkin.modding.events.ScriptEventDispatcher;
 import funkin.play.character.BaseCharacter;
+import funkin.play.character.CharacterData;
 import funkin.play.character.CharacterData.CharacterDataParser;
 import funkin.play.components.ComboMilestone;
 import funkin.play.components.HealthIcon;
@@ -1529,6 +1530,10 @@ class PlayState extends MusicBeatSubState
    */
   function initHealthBar():Void
   {
+    var currentCharacterData:SongCharacterData = currentChart.characters;
+    var playerColor:Array<Int> = CharacterDataParser.fetchCharacterData(currentCharacterData.player).bar_color;
+    var opponentColor:Array<Int> = CharacterDataParser.fetchCharacterData(currentCharacterData.opponent).bar_color;
+
     var healthBarYPos:Float = Preferences.downscroll ? FlxG.height * 0.1 : FlxG.height * 0.9;
     healthBarBG = FunkinSprite.create(0, healthBarYPos, 'healthBar');
     healthBarBG.screenCenter(X);
@@ -1539,7 +1544,8 @@ class PlayState extends MusicBeatSubState
     healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
       'healthLerp', 0, 2);
     healthBar.scrollFactor.set();
-    healthBar.createFilledBar(Constants.COLOR_HEALTH_BAR_RED, Constants.COLOR_HEALTH_BAR_GREEN);
+    healthBar.createFilledBar(FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]),
+      FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]));
     healthBar.zIndex = 801;
     add(healthBar);
 
@@ -1769,9 +1775,8 @@ class PlayState extends MusicBeatSubState
     add(opponentStrumline);
 
     // Position the player strumline on the right half of the screen
-    playerStrumline.x = FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
+    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
     // playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET; // Centered style
-    if (Preferences.middlescroll) playerStrumline.x = playerStrumline.x = FlxG.width / 2 - playerStrumline.width / 2;
 
     playerStrumline.y = Preferences.downscroll ? FlxG.height - playerStrumline.height - Constants.STRUMLINE_Y_OFFSET : Constants.STRUMLINE_Y_OFFSET;
     playerStrumline.zIndex = 1001;

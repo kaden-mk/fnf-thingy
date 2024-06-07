@@ -3,6 +3,7 @@
   "name": "Nene",
   "assetPath": "characters/Nene",
   "startingAnimation": "danceRight",
+  "bar_color": [215, 73, 121],
   "animations": [
     {
       "name": "danceLeft",

@@ -398,6 +398,7 @@ class CharacterDataParser
   static final DEFAULT_SCALE:Float = 1;
   static final DEFAULT_SCROLL:Array<Float> = [0, 0];
   static final DEFAULT_STARTINGANIM:String = 'idle';
+  static final DEFAULT_BARCOLOR:Array<Int> = [255, 255, 255];
 
   /**
    * Set unspecified parameters to their defaults.
@@ -513,6 +514,11 @@ class CharacterDataParser
     if (input.singTime == null)
     {
       input.singTime = DEFAULT_SINGTIME;
+    }
+
+    if (input.bar_color == null)
+    {
+      input.bar_color = DEFAULT_BARCOLOR;
     }
 
     if (input.animations == null || input.animations.length == 0)
@@ -680,6 +686,8 @@ typedef CharacterData =
    * @default 1.0
    */
   var singTime:Null<Float>;
+
+  var bar_color:Array<Int>;
 
   /**
    * An optional array of animations which the character can play.

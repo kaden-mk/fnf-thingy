@@ -3,6 +3,7 @@
   "name": "Pico",
   "assetPath": "characters/Pico_Basic",
   "flipX": true,
+  "bar_color": [183, 216, 85],
   "animations": [
     {
       "name": "idle",

@@ -8,6 +8,7 @@
   "healthIcon": {
     "id": "bf"
   },
+  "bar_color": [49, 176, 209],
   "animations": [
     {
       "name": "idle",

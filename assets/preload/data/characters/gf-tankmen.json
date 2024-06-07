@@ -3,6 +3,7 @@
   "name": "Girlfriend (Tankman Stickup)",
   "assetPath": "characters/gfTankmen",
   "startingAnimation": "danceLeft",
+  "bar_color": [165, 0, 77],
   "animations": [
     {
       "name": "danceLeft",

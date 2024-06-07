@@ -2,6 +2,7 @@
   "version": "1.0.0",
   "name": "Mommy and Daddy (Festive)",
   "assetPath": "characters/mom_dad_christmas_assets",
+  "bar_color": [196, 94, 174],
   "animations": [
     {
       "name": "idle",

@@ -6,6 +6,7 @@
   "renderType": "packer",
   "isPixel": true,
   "scale": 6,
+  "bar_color": [255, 60, 110],
   "animations": [
     {
       "name": "idle",

@@ -3,6 +3,7 @@
   "name": "Daddy Dearest",
   "assetPath": "characters/daddyDearest",
   "singTime": 8.0,
+  "bar_color": [175, 102, 206],
   "animations": [
     {
       "name": "idle",

@@ -13,6 +13,7 @@
     "cameraOffsets": [1700, 1550],
     "cameraZoom": 0.8
   },
+  "bar_color": [183, 216, 85],
   "animations": [
     {
       "name": "idle",

@@ -12,6 +12,7 @@
   },
   "flipX": true,
   "renderType": "multisparrow",
+  "bar_color": [183, 216, 85],
   "animations": [
     {
       "name": "idle",

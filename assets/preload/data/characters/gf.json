@@ -4,6 +4,7 @@
   "assetPath": "characters/GF_assets",
   "startingAnimation": "danceRight",
   "singTime": 8.0,
+  "bar_color": [165, 0, 77],
   "animations": [
     {
       "name": "danceLeft",

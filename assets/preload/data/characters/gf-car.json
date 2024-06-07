@@ -4,6 +4,7 @@
   "assetPath": "characters/gfCar",
   "startingAnimation": "danceRight",
   "cameraOffsets": [0, -200],
+  "bar_color": [165, 0, 77],
   "animations": [
     {
       "name": "danceLeft",

@@ -9,6 +9,7 @@
     "id": "senpai",
     "isPixel": true
   },
+  "bar_color": [255, 170, 111],
   "animations": [
     {
       "name": "idle",

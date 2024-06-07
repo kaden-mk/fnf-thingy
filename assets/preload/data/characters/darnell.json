@@ -4,6 +4,7 @@
   "assetPath": "characters/darnell",
   "singTime": 8.0,
   "offsets": [20, 100],
+  "bar_color": [115, 94, 176],
   "animations": [
     {
       "name": "idle",

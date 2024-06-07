@@ -4,6 +4,7 @@
   "assetPath": "characters/SpookyKids",
   "singTime": 8.0,
   "startingAnimation": "danceRight",
+  "bar_color": [213, 126, 0],
   "animations": [
     {
       "name": "danceLeft",

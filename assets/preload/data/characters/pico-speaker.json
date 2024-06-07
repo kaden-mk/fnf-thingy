@@ -5,6 +5,7 @@
   "startingAnimation": "idle",
   "singTime": 8.0,
   "offsets": [125, 0],
+  "bar_color": [183, 216, 85],
   "animations": [
     {
       "name": "idle",

@@ -7,6 +7,7 @@
   },
   "renderType": "animateatlas",
   "singTime": 999.0,
+  "bar_color": [115, 94, 176],
   "animations": [
     {
       "name": "idle",
