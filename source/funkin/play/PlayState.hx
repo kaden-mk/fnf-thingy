@@ -182,6 +182,9 @@ class PlayState extends MusicBeatSubState
    */
   public var currentStage:Stage = null;
 
+  public var mustHitSection:Bool = true;
+  public var cameraLocked:Bool = false;
+
   /**
    * Gets set to true when the PlayState needs to reset (player opted to restart or died).
    * Gets disabled once resetting happens.
@@ -193,6 +196,11 @@ class PlayState extends MusicBeatSubState
    * Resets when you beat a song or go back to the main menu.
    */
   public var deathCounter:Int = 0;
+
+  /**
+   * the number for when hitting a note or some shit
+   */
+  var cameraOffsetNumber:Int = 10;
 
   /**
    * The player's current health.
@@ -1146,6 +1154,22 @@ class PlayState extends MusicBeatSubState
           if (!eventEvent.eventCanceled)
           {
             SongEventRegistry.handleEvent(event);
+
+            if (event.eventKind == "FocusCamera")
+            {
+              switch (event.value.char)
+              {
+                case 0:
+                  mustHitSection = true;
+                  cameraLocked = false;
+                case 1:
+                  mustHitSection = false;
+                  cameraLocked = false;
+                case 2:
+                  cameraLocked = true;
+                  mustHitSection = false;
+              }
+            }
           }
         }
       }
@@ -1667,6 +1691,8 @@ class PlayState extends MusicBeatSubState
     {
       // Chosen GF was '' so we don't load one.
     }
+
+    // errr test this later for play as opponent
 
     //
     // DAD
@@ -2190,6 +2216,27 @@ class PlayState extends MusicBeatSubState
         {
           opponentStrumline.playNoteHoldCover(note.holdNoteSprite);
         }
+
+        var bf = currentStage.getBoyfriend();
+        var dad = currentStage.getDad().cameraFocusPoint;
+
+        if (cameraLocked || mustHitSection) return;
+
+        switch (note.noteData.getDirection())
+        {
+          case 0:
+            // left
+            cameraFollowPoint.setPosition(dad.x + cameraOffsetNumber, dad.y);
+          case 1:
+            // down
+            cameraFollowPoint.setPosition(dad.x, dad.y + cameraOffsetNumber);
+          case 2:
+            // up
+            cameraFollowPoint.setPosition(dad.x, dad.y - cameraOffsetNumber);
+          case 3:
+            // right
+            cameraFollowPoint.setPosition(dad.x - cameraOffsetNumber, dad.y);
+        }
       }
       else if (Conductor.instance.songPosition > hitWindowStart)
       {
@@ -2489,6 +2536,8 @@ class PlayState extends MusicBeatSubState
         healthChange = Constants.HEALTH_SHIT_BONUS;
     }
 
+    var bf = currentStage.getBoyfriend().cameraFocusPoint;
+    var dad = currentStage.getDad();
     // Send the note hit event.
     var event:HitNoteScriptEvent = new HitNoteScriptEvent(note, healthChange, score, daRating, Highscore.tallies.combo + 1);
     dispatchEvent(event);
@@ -2500,6 +2549,25 @@ class PlayState extends MusicBeatSubState
     popUpScore(note, event.score, event.judgement, event.healthChange);
 
     calculateAccuracy();
+
+    // if (dad.isSinging()) return;
+    if (cameraLocked || !mustHitSection) return;
+
+    switch (note.noteData.getDirection())
+    {
+      case 0:
+        // left
+        cameraFollowPoint.setPosition(bf.x + cameraOffsetNumber, bf.y);
+      case 1:
+        // down
+        cameraFollowPoint.setPosition(bf.x, bf.y + cameraOffsetNumber);
+      case 2:
+        // up
+        cameraFollowPoint.setPosition(bf.x, bf.y - cameraOffsetNumber);
+      case 3:
+        // right
+        cameraFollowPoint.setPosition(bf.x - cameraOffsetNumber, bf.y);
+    }
   }
 
   /**
@@ -2509,6 +2577,9 @@ class PlayState extends MusicBeatSubState
   function onNoteMiss(note:NoteSprite, playSound:Bool = false, healthChange:Float):Void
   {
     // If we are here, we already CALLED the onNoteMiss script hook!
+    var event:HitNoteScriptEvent = new HitNoteScriptEvent(note, healthChange, 0, 'shit', Highscore.tallies.combo + 0);
+
+    if (event.eventCanceled) return;
 
     health += healthChange;
     songScore -= 10;
