@@ -96,6 +96,7 @@ class Save
           naughtyness: true,
           downscroll: false,
           middlescroll: false,
+          playAsOpponent: false,
           flashingLights: true,
           zoomCamera: true,
           debugDisplay: false,
@@ -910,6 +911,12 @@ typedef SaveDataOptions =
    * @default `false`
    */
   var middlescroll:Bool;
+
+  /**
+   * If enabled the player will play as the "dad" character instead of the "bf" character.
+   * @default `false`
+   */
+  var playAsOpponent:Bool;
 
   /**
    * If enabled, the player wont miss when hitting a note while there are no notes visible.

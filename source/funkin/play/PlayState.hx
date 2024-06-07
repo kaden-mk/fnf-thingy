@@ -1828,6 +1828,13 @@ class PlayState extends MusicBeatSubState
       playerStrumline.fadeInArrows();
       opponentStrumline.fadeInArrows();
     }
+
+    var templatePlr = playerStrumline;
+    if (Preferences.playAsOpponent)
+    {
+      playerStrumline = opponentStrumline;
+      opponentStrumline = templatePlr;
+    }
   }
 
   /**
@@ -1939,6 +1946,13 @@ class PlayState extends MusicBeatSubState
         case 1:
           opponentNoteData.push(songNote);
       }
+    }
+
+    if (Preferences.playAsOpponent) {
+      playerStrumline.applyNoteData(opponentNoteData);
+      opponentStrumline.applyNoteData(playerNoteData);
+
+      return;
     }
 
     playerStrumline.applyNoteData(playerNoteData);
@@ -2264,10 +2278,12 @@ class PlayState extends MusicBeatSubState
       // While the hold note is being hit, and there is length on the hold note...
       if (holdNote.hitNote && !holdNote.missedNote && holdNote.sustainLength > 0)
       {
+        var bfordad = Preferences.playAsOpponent ? currentStage.getBoyfriend() : currentStage.getDad();
+
         // Make sure the opponent keeps singing while the note is held.
-        if (currentStage != null && currentStage.getDad() != null && currentStage.getDad().isSinging())
+        if (currentStage != null && bfordad != null && bfordad.isSinging())
         {
-          currentStage.getDad().holdTimer = 0;
+          bfordad.holdTimer = 0;
         }
       }
 

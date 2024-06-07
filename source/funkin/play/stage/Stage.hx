@@ -566,7 +566,7 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
    * @param pop If true, the character will be removed from the stage as well.
    * @return The Dad character.
    */
-  public function getDad(pop:Bool = false):BaseCharacter
+  public function getDad(pop:Bool = false, playAs:Bool = false):BaseCharacter
   {
     if (pop)
     {
@@ -580,6 +580,11 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
     }
     else
     {
+      // maybe return the bf instead for play as opponent setting, will see tho..
+      // on second note ill just make it a parameter
+
+      if (playAs) return getCharacter('bf');
+
       return getCharacter('dad');
     }
   }
@@ -589,9 +594,9 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
    * @param pop If true, the character will be removed from the stage as well.
    * @return The opponent character.
    */
-  public function getOpponent(pop:Bool = false):BaseCharacter
+  public function getOpponent(pop:Bool = false, playAs:Bool = false):BaseCharacter
   {
-    return getDad(pop);
+    return getDad(pop, playAs);
   }
 
   /**
