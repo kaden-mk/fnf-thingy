@@ -2,6 +2,7 @@ package funkin.ui.options;
 
 import flixel.FlxCamera;
 import flixel.FlxObject;
+import flixel.FlxSubState;
 import flixel.FlxSprite;
 import flixel.group.FlxSpriteGroup.FlxTypedSpriteGroup;
 import funkin.ui.AtlasText.AtlasFont;
@@ -10,6 +11,7 @@ import funkin.ui.options.OptionsState.PageName;
 import funkin.graphics.FunkinCamera;
 import funkin.ui.TextMenuList.TextMenuItem;
 import funkin.ui.options.PreferencesMenu.CheckboxPreferenceItem;
+import funkin.ui.debug.uipos.UiPosState;
 
 class CustomizeUiMenu extends Page
 {
@@ -58,25 +60,20 @@ class CustomizeUiMenu extends Page
    */
   function createUiItems():Void
   {
-    createItem('Disable UI', function() switchPage(DisableUi));
-   // createUiItem('Customize Positions');
+    createItem('DISABLE UI', function() switchPage(DisableUi));
+    createItem('CUSTOMISE POSITIONS', function() {
+      items.visible = false;
+      FlxG.state.openSubState(new UiPosState());
+    });
   }
 
   function createItem(name:String, callback:Void->Void, fireInstantly = false)
   {
     var item = items.createItem(120, (120 * items.length), name, AtlasFont.BOLD, callback);
     item.fireInstantly = fireInstantly;
-    //item.screenCenter(X);
+    item.screenCenter(X);
 
     return item;
-  }
-
-  function createUiItem(prefName:String, opensMenu, page):Void
-  {
-    items.createItem(120, (120 * items.length), prefName, AtlasFont.BOLD, function() {
-      var pageObject = addPage(page, opensMenu);
-
-    });
   }
 
   function addPage<T:Page>(name:PageName, page:T)
