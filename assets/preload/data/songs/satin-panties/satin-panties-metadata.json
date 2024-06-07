@@ -7,7 +7,7 @@
   "looped": false,
   "playData": {
     "album": "volume1",
-    "songVariations": [],
+    "songVariations": ["erect"],
     "difficulties": ["easy", "normal", "hard"],
     "characters": {
       "player": "bf-car",
