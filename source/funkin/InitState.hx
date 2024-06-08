@@ -57,8 +57,6 @@ class InitState extends FlxState
     // Load player options from save data.
     // Flixel has already loaded the save data, so we can just use it.
     Preferences.init();
-    DisableUi.init();
-    CustomizeUi.init();
 
     // Load controls from save data.
     PlayerSettings.init();
@@ -216,6 +214,32 @@ class InitState extends FlxState
     #elseif STAGEBUILD
     // -DSTAGEBUILD
     FlxG.switchState(() -> new funkin.ui.debug.stage.StageBuilderState());
+    #elseif RESULTS
+    // -DRESULTS
+    FlxG.switchState(() -> new funkin.play.ResultState(
+      {
+        storyMode: false,
+        title: "Cum Song Erect by Kawai Sprite",
+        songId: "cum",
+        difficultyId: "nightmare",
+        isNewHighscore: true,
+        scoreData:
+          {
+            score: 1_234_567,
+            tallies:
+              {
+                sick: 130,
+                good: 60,
+                bad: 69,
+                shit: 69,
+                missed: 69,
+                combo: 69,
+                maxCombo: 69,
+                totalNotesHit: 140,
+                totalNotes: 200 // 0,
+              }
+          },
+      }));
     #elseif ANIMDEBUG
     // -DANIMDEBUG
     FlxG.switchState(() -> new funkin.ui.debug.anim.DebugBoundingState());

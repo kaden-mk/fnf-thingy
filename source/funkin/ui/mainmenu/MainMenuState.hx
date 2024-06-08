@@ -42,6 +42,16 @@ class MainMenuState extends MusicBeatState
   var magenta:FlxSprite;
   var camFollow:FlxObject;
 
+  var overrideMusic:Bool = false;
+
+  static var rememberedSelectedIndex:Int = 0;
+
+  public function new(?_overrideMusic:Bool = false)
+  {
+    super();
+    overrideMusic = _overrideMusic;
+  }
+
   override function create():Void
   {
     #if discord_rpc
@@ -49,10 +59,12 @@ class MainMenuState extends MusicBeatState
     DiscordClient.changePresence("In the Menus", null);
     #end
 
+    FlxG.cameras.reset(new FunkinCamera('mainMenu'));
+
     transIn = FlxTransitionableState.defaultTransIn;
     transOut = FlxTransitionableState.defaultTransOut;
 
-    playMenuMusic();
+    if (overrideMusic == false) playMenuMusic();
 
     // We want the state to always be able to begin with being able to accept inputs and show the anims of the menu items.
     persistentUpdate = true;
@@ -113,16 +125,16 @@ class MainMenuState extends MusicBeatState
     // we need to open the link as an immediate result of a keypress event,
     // so we can't wait for the flicker animation to complete.
     var hasPopupBlocker = #if web true #else false #end;
-    // createMenuItem('merch', 'mainmenu/merch', selectMerch, hasPopupBlocker);
+    createMenuItem('merch', 'mainmenu/merch', selectMerch, hasPopupBlocker);
     #end
 
     createMenuItem('options', 'mainmenu/options', function() {
       startExitState(() -> new funkin.ui.options.OptionsState());
     });
 
-     createMenuItem('credits', 'mainmenu/credits', function() {
-       startExitState(() -> new funkin.ui.credits.CreditsState());
-     });
+    createMenuItem('credits', 'mainmenu/credits', function() {
+      startExitState(() -> new funkin.ui.credits.CreditsState());
+    });
 
     // Reset position of menu items.
     var spacing = 160;
@@ -136,6 +148,8 @@ class MainMenuState extends MusicBeatState
       // This one affects how much the menu items move when you scroll between them.
       menuItem.scrollFactor.y = 0.4;
     }
+
+    menuItems.selectItem(rememberedSelectedIndex);
 
     resetCamStuff();
 
@@ -170,7 +184,6 @@ class MainMenuState extends MusicBeatState
 
   function resetCamStuff():Void
   {
-    FlxG.cameras.reset(new FunkinCamera('mainMenu'));
     FlxG.camera.follow(camFollow, null, 0.06);
     FlxG.camera.snapToTarget();
   }
@@ -285,6 +298,8 @@ class MainMenuState extends MusicBeatState
   function startExitState(state:NextState):Void
   {
     menuItems.enabled = false; // disable for exit
+    rememberedSelectedIndex = menuItems.selectedIndex;
+
     var duration = 0.4;
     menuItems.forEach(function(item) {
       if (menuItems.selectedIndex != item.ID)
@@ -329,6 +344,8 @@ class MainMenuState extends MusicBeatState
       persistentUpdate = false;
 
       FlxG.state.openSubState(new DebugMenuSubState());
+      // reset camera when debug menu is closed
+      subStateClosed.addOnce(_ -> resetCamStuff());
     }
     #end
 
@@ -351,8 +368,7 @@ class MainMenuState extends MusicBeatState
               maxCombo: 0,
               totalNotesHit: 0,
               totalNotes: 0,
-            },
-          accuracy: 0,
+            }
         });
     }
     #end

@@ -124,7 +124,7 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
       getGirlfriend().resetCharacter(true);
       // Reapply the camera offsets.
       var stageCharData:StageDataCharacter = _data.characters.gf;
-      var finalScale:Float = getBoyfriend().getBaseScale() * stageCharData.scale;
+      var finalScale:Float = getGirlfriend().getBaseScale() * stageCharData.scale;
       getGirlfriend().setScale(finalScale);
       getGirlfriend().cameraFocusPoint.x += stageCharData.cameraOffsets[0];
       getGirlfriend().cameraFocusPoint.y += stageCharData.cameraOffsets[1];
@@ -134,7 +134,7 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
       getDad().resetCharacter(true);
       // Reapply the camera offsets.
       var stageCharData:StageDataCharacter = _data.characters.dad;
-      var finalScale:Float = getBoyfriend().getBaseScale() * stageCharData.scale;
+      var finalScale:Float = getDad().getBaseScale() * stageCharData.scale;
       getDad().setScale(finalScale);
       getDad().cameraFocusPoint.x += stageCharData.cameraOffsets[0];
       getDad().cameraFocusPoint.y += stageCharData.cameraOffsets[1];
@@ -566,7 +566,7 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
    * @param pop If true, the character will be removed from the stage as well.
    * @return The Dad character.
    */
-  public function getDad(pop:Bool = false):BaseCharacter
+  public function getDad(pop:Bool = false, playAs:Bool = false):BaseCharacter
   {
     if (pop)
     {
@@ -580,6 +580,11 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
     }
     else
     {
+      // maybe return the bf instead for play as opponent setting, will see tho..
+      // on second note ill just make it a parameter
+
+      if (playAs) return getCharacter('bf');
+
       return getCharacter('dad');
     }
   }
@@ -589,9 +594,9 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
    * @param pop If true, the character will be removed from the stage as well.
    * @return The opponent character.
    */
-  public function getOpponent(pop:Bool = false):BaseCharacter
+  public function getOpponent(pop:Bool = false, playAs:Bool = false):BaseCharacter
   {
-    return getDad(pop);
+    return getDad(pop, playAs);
   }
 
   /**
@@ -850,6 +855,11 @@ class Stage extends FlxSpriteGroup implements IPlayStateScriptedClass implements
       FlxG.log.error('cannot grab the screen: the main camera is not grabbable');
       return null;
     }
+  }
+
+  public override function toString():String
+  {
+    return 'Stage($id)';
   }
 
   static function _fetchData(id:String):Null<StageData>

@@ -8,6 +8,25 @@ import funkin.save.Save;
 class Preferences
 {
   /**
+   * Whether you play as the opponent or not.
+   * @default `false`
+   */
+  public static var playAsOpponent(get, set):Bool;
+
+  static function get_playAsOpponent():Bool
+  {
+    return Save?.instance?.options.playAsOpponent;
+  }
+
+  static function set_playAsOpponent(value:Bool):Bool
+  {
+    var save:Save = Save.instance;
+    save.options.playAsOpponent = value;
+    save.flush();
+    return value;
+  }
+
+  /**
    * Whether some particularly fowl language is displayed.
    * @default `true`
    */

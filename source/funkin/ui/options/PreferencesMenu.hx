@@ -58,6 +58,9 @@ class PreferencesMenu extends Page
     createPrefItemCheckbox('Middlescroll', 'Enable to make notes move to the middle.', function(value:Bool):Void {
       Preferences.middlescroll = value;
     }, Preferences.middlescroll);
+    createPrefItemCheckbox('Play as opponent', 'You play as the opponent instead of bf.', function(value:Bool):Void {
+      Preferences.playAsOpponent = value;
+    }, Preferences.playAsOpponent);
     createPrefItemCheckbox('Ghost Tapping', 'You wont get misses from pressing keys\nwhile there are no notes able to be hit.', function(value:Bool):Void {
       Preferences.ghostTapping = value;
     }, Preferences.ghostTapping);
