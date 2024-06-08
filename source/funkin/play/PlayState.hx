@@ -1817,7 +1817,7 @@ class PlayState extends MusicBeatSubState
     add(opponentStrumline);
 
     // Position the player strumline on the right half of the screen
-    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
+    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Preferences.playAsOpponent ? Constants.STRUMLINE_X_OFFSET : FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
     // playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET; // Centered style
 
     playerStrumline.y = Preferences.downscroll ? FlxG.height - playerStrumline.height - Constants.STRUMLINE_Y_OFFSET : Constants.STRUMLINE_Y_OFFSET;
@@ -1825,7 +1825,7 @@ class PlayState extends MusicBeatSubState
     playerStrumline.cameras = [camHUD];
 
     // Position the opponent strumline on the left half of the screen
-    opponentStrumline.x = Constants.STRUMLINE_X_OFFSET;
+    opponentStrumline.x = Preferences.playAsOpponent ? FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET : Constants.STRUMLINE_X_OFFSET;
     if (!DisableUi.oppNotes || Preferences.middlescroll)
     {
       for (arrow in opponentStrumline.members)
@@ -1965,12 +1965,12 @@ class PlayState extends MusicBeatSubState
     {
       playerStrumline.applyNoteData(opponentNoteData);
       opponentStrumline.applyNoteData(playerNoteData);
-
-      return;
     }
-
-    playerStrumline.applyNoteData(playerNoteData);
-    opponentStrumline.applyNoteData(opponentNoteData);
+    else
+    {
+      playerStrumline.applyNoteData(playerNoteData);
+      opponentStrumline.applyNoteData(opponentNoteData);
+    }
   }
 
   function onStrumlineNoteIncoming(noteSprite:NoteSprite):Void
@@ -2247,8 +2247,9 @@ class PlayState extends MusicBeatSubState
 
         var bf = currentStage.getBoyfriend();
         var dad = currentStage.getDad().cameraFocusPoint;
+        if (Preferences.playAsOpponent) dad = currentStage.getBoyfriend().cameraFocusPoint; // im just adding so many things i hope this shit works
 
-        if (cameraLocked || mustHitSection) return;
+        if (cameraLocked || Preferences.playAsOpponent ? !mustHitSection : mustHitSection) return;
 
         switch (note.noteData.getDirection())
         {
@@ -2571,6 +2572,9 @@ class PlayState extends MusicBeatSubState
     }
 
     var bf = currentStage.getBoyfriend().cameraFocusPoint;
+
+    if (Preferences.playAsOpponent) bf = currentStage.getDad().cameraFocusPoint;
+
     var dad = currentStage.getDad();
     // Send the note hit event.
     var event:HitNoteScriptEvent = new HitNoteScriptEvent(note, healthChange, score, daRating, Highscore.tallies.combo + 1);
@@ -2585,7 +2589,7 @@ class PlayState extends MusicBeatSubState
     calculateAccuracy();
 
     // if (dad.isSinging()) return;
-    if (cameraLocked || !mustHitSection) return;
+    if (cameraLocked || Preferences.playAsOpponent ? mustHitSection : !mustHitSection) return;
 
     switch (note.noteData.getDirection())
     {
@@ -2655,7 +2659,8 @@ class PlayState extends MusicBeatSubState
           });
       }
     }
-    vocals.playerVolume = 0;
+    if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
+    //vocals.playerVolume = 0;
 
     Highscore.tallies.missed++;
 
@@ -2668,7 +2673,8 @@ class PlayState extends MusicBeatSubState
 
     if (playSound)
     {
-      vocals.playerVolume = 0;
+      if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
+      //vocals.playerVolume = 0;
       FunkinSound.playOnce(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.5, 0.6));
     }
 
@@ -2725,7 +2731,8 @@ class PlayState extends MusicBeatSubState
 
     if (event.playSound)
     {
-      vocals.playerVolume = 0;
+      if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
+      //vocals.playerVolume = 0;
       FunkinSound.playOnce(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
     }
   }
@@ -2812,6 +2819,7 @@ class PlayState extends MusicBeatSubState
     }
 
     vocals.playerVolume = 1;
+    vocals.opponentVolume = 1;
 
     var isComboBreak = false;
     switch (daRating)
@@ -2905,6 +2913,7 @@ class PlayState extends MusicBeatSubState
     }
 
     vocals.playerVolume = 1;
+    vocals.opponentVolume = 1;
   }
 
   /**
