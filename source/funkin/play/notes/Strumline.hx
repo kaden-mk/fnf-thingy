@@ -676,14 +676,18 @@ class Strumline extends FlxSpriteGroup
 
   public function playNoteHoldCover(holdNote:SustainTrail):Void
   {
-    // TODO: Add a setting to disable note splashes.
-    // if (Settings.noSplash) return;
-    if (!noteStyle.isHoldNoteCoverEnabled()) return;
+    // TODO: Add a setting to disable note splashes. Don't worry ninjamuffin i did it for you :3
+    if (!Preferences.noteSplashes) trace("returned");
+    return;
+    if (!noteStyle.isHoldNoteCoverEnabled()) trace("returned");
+    return;
 
     var cover:NoteHoldCover = this.constructNoteHoldCover();
 
     if (cover != null)
     {
+      trace("didnt return yipee");
+
       cover.holdNote = holdNote;
       holdNote.cover = cover;
       cover.visible = true;
