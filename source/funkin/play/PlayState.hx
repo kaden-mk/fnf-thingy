@@ -1582,11 +1582,19 @@ class PlayState extends MusicBeatSubState
     healthBarBG.zIndex = 800;
     add(healthBarBG);
 
-    healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-      'healthLerp', 0, 2);
+    healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, Preferences.playAsOpponent ? LEFT_TO_RIGHT : RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8),
+      Std.int(healthBarBG.height - 8), this, 'healthLerp', 0, 2);
     healthBar.scrollFactor.set();
-    healthBar.createFilledBar(FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]),
-      FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]));
+    if (Preferences.playAsOpponent)
+    {
+      healthBar.createFilledBar(FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]),
+        FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]));
+    }
+    else
+    {
+      healthBar.createFilledBar(FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]),
+        FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]));
+    }
     healthBar.zIndex = 801;
     add(healthBar);
 
@@ -1829,17 +1837,16 @@ class PlayState extends MusicBeatSubState
     opponentStrumline.zIndex = 1000;
     opponentStrumline.cameras = [camHUD];
 
+    if (Preferences.playAsOpponent)
+    {
+      playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Constants.STRUMLINE_X_OFFSET;
+      opponentStrumline.x = FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET;
+    }
+
     if (!PlayStatePlaylist.isStoryMode)
     {
       playerStrumline.fadeInArrows();
       opponentStrumline.fadeInArrows();
-    }
-
-    var templatePlr = playerStrumline;
-    if (Preferences.playAsOpponent)
-    {
-      playerStrumline = opponentStrumline;
-      opponentStrumline = templatePlr;
     }
   }
 
