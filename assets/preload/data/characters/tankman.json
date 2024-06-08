@@ -18,6 +18,7 @@
     "isPixel": false,
     "scale": 1
   },
+  "bar_color": [225, 225, 225],
   "animations": [
     {
       "flipY": false,

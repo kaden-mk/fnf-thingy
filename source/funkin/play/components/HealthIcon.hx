@@ -236,16 +236,21 @@ class HealthIcon extends FunkinSprite
       {
         case 0: // Boyfriend
           // Update the animation based on the current state.
-          updateHealthIcon(PlayState.instance.health);
+          updateHealthIcon(Preferences.playAsOpponent ? MAXIMUM_HEALTH - PlayState.instance.health : PlayState.instance.health);
           // Update the position to match the health bar.
           this.x = PlayState.instance.healthBar.x
-            + (PlayState.instance.healthBar.width * (FlxMath.remapToRange(PlayState.instance.healthBar.value, 0, 2, 100, 0) * 0.01) - POSITION_OFFSET);
+            +
+            (PlayState.instance.healthBar.width * (FlxMath.remapToRange(Preferences.playAsOpponent ? 2 - PlayState.instance.healthBar.value : PlayState.instance.healthBar.value,
+              0, 2, 100, 0) * 0.01)
+              - POSITION_OFFSET);
         case 1: // Dad
           // Update the animation based on the current state.
-          updateHealthIcon(MAXIMUM_HEALTH - PlayState.instance.health);
+          updateHealthIcon(Preferences.playAsOpponent ? PlayState.instance.health : MAXIMUM_HEALTH - PlayState.instance.health);
           // Update the position to match the health bar.
           this.x = PlayState.instance.healthBar.x
-            + (PlayState.instance.healthBar.width * (FlxMath.remapToRange(PlayState.instance.healthBar.value, 0, 2, 100, 0) * 0.01))
+            +
+            (PlayState.instance.healthBar.width * (FlxMath.remapToRange(Preferences.playAsOpponent ? 2 - PlayState.instance.healthBar.value : PlayState.instance.healthBar.value,
+              0, 2, 100, 0) * 0.01))
             - (this.width - POSITION_OFFSET);
       }
 

@@ -1582,11 +1582,19 @@ class PlayState extends MusicBeatSubState
     healthBarBG.zIndex = 800;
     add(healthBarBG);
 
-    healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8), Std.int(healthBarBG.height - 8), this,
-      'healthLerp', 0, 2);
+    healthBar = new FlxBar(healthBarBG.x + 4, healthBarBG.y + 4, Preferences.playAsOpponent ? LEFT_TO_RIGHT : RIGHT_TO_LEFT, Std.int(healthBarBG.width - 8),
+      Std.int(healthBarBG.height - 8), this, 'healthLerp', 0, 2);
     healthBar.scrollFactor.set();
-    healthBar.createFilledBar(FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]),
-      FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]));
+    if (Preferences.playAsOpponent)
+    {
+      healthBar.createFilledBar(FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]),
+        FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]));
+    }
+    else
+    {
+      healthBar.createFilledBar(FlxColor.fromRGB(opponentColor[0], opponentColor[1], opponentColor[2]),
+        FlxColor.fromRGB(playerColor[0], playerColor[1], playerColor[2]));
+    }
     healthBar.zIndex = 801;
     add(healthBar);
 
@@ -1809,7 +1817,8 @@ class PlayState extends MusicBeatSubState
     add(opponentStrumline);
 
     // Position the player strumline on the right half of the screen
-    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Preferences.playAsOpponent ? Constants.STRUMLINE_X_OFFSET : FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
+    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Preferences.playAsOpponent ? Constants.STRUMLINE_X_OFFSET : FlxG.width / 2
+      + Constants.STRUMLINE_X_OFFSET; // Classic style
     // playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET; // Centered style
 
     playerStrumline.y = Preferences.downscroll ? FlxG.height - playerStrumline.height - Constants.STRUMLINE_Y_OFFSET : Constants.STRUMLINE_Y_OFFSET;
@@ -2657,8 +2666,10 @@ class PlayState extends MusicBeatSubState
           });
       }
     }
-    if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
-    //vocals.playerVolume = 0;
+    if (Preferences.playAsOpponent) vocals.opponentVolume = 0;
+    else
+      vocals.playerVolume = 0;
+    // vocals.playerVolume = 0;
 
     Highscore.tallies.missed++;
 
@@ -2671,8 +2682,10 @@ class PlayState extends MusicBeatSubState
 
     if (playSound)
     {
-      if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
-      //vocals.playerVolume = 0;
+      if (Preferences.playAsOpponent) vocals.opponentVolume = 0;
+      else
+        vocals.playerVolume = 0;
+      // vocals.playerVolume = 0;
       FunkinSound.playOnce(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.5, 0.6));
     }
 
@@ -2729,8 +2742,10 @@ class PlayState extends MusicBeatSubState
 
     if (event.playSound)
     {
-      if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
-      //vocals.playerVolume = 0;
+      if (Preferences.playAsOpponent) vocals.opponentVolume = 0;
+      else
+        vocals.playerVolume = 0;
+      // vocals.playerVolume = 0;
       FunkinSound.playOnce(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
     }
   }
