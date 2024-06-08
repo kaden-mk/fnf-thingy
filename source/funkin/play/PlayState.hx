@@ -1896,6 +1896,10 @@ class PlayState extends MusicBeatSubState
       }
     }
 
+    trace(currentChart.noCamMovement);
+    if (currentChart.noCamMovement)
+      cameraLocked = true;
+
     regenNoteData();
 
     var event:ScriptEvent = new ScriptEvent(CREATE, false);
@@ -2279,7 +2283,8 @@ class PlayState extends MusicBeatSubState
       // While the hold note is being hit, and there is length on the hold note...
       if (holdNote.hitNote && !holdNote.missedNote && holdNote.sustainLength > 0)
       {
-        var bfordad = Preferences.playAsOpponent ? currentStage.getBoyfriend() : currentStage.getDad();
+        // Preferences.playAsOpponent ? currentStage.getBoyfriend() :
+        var bfordad =  currentStage.getDad();
 
         // Make sure the opponent keeps singing while the note is held.
         if (currentStage != null && bfordad != null && bfordad.isSinging())
@@ -2396,6 +2401,13 @@ class PlayState extends MusicBeatSubState
       // While the hold note is being hit, and there is length on the hold note...
       if (!isBotPlayMode && holdNote.hitNote && !holdNote.missedNote && holdNote.sustainLength > 0)
       {
+        if (Preferences.playAsOpponent) {
+          if (currentStage != null && currentStage.getBoyfriend() != null && currentStage.getBoyfriend().isSinging())
+          {
+            currentStage.getBoyfriend().holdTimer = 0;
+          }
+        }
+
         // Grant the player health.
         health += Constants.HEALTH_HOLD_BONUS_PER_SECOND * elapsed;
         songScore += Std.int(Constants.SCORE_HOLD_BONUS_PER_SECOND * elapsed);

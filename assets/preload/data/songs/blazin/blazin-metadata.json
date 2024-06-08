@@ -1,5 +1,6 @@
 {
   "version": "2.2.1",
+  "noCamMovement": true,
   "songName": "Blazin'",
   "artist": "Kawai Sprite",
   "charter": "fabs + PhantomArcade",

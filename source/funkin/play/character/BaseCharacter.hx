@@ -353,7 +353,6 @@ class BaseCharacter extends Bopper
     // Reset hold timer for each note pressed.
     if (justPressedNote() && this.characterType == BF)
     {
-      trace(this.characterType);
       holdTimer = 0;
     }
 

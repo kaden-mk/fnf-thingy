@@ -41,6 +41,10 @@ class SongMetadata implements ICloneable<SongMetadata>
   @:default(false)
   public var looped:Bool;
 
+  @:optional
+  @:default(false)
+  public var noCamMovement:Bool;
+
   /**
    * Instrumental and vocal offsets.
    * Defaults to an empty SongOffsets object.
@@ -78,6 +82,7 @@ class SongMetadata implements ICloneable<SongMetadata>
     this.offsets = new SongOffsets();
     this.timeChanges = [new SongTimeChange(0, 100)];
     this.looped = false;
+    this.noCamMovement = false;
     this.playData = new SongPlayData();
     this.playData.songVariations = [];
     this.playData.difficulties = [];
@@ -103,6 +108,7 @@ class SongMetadata implements ICloneable<SongMetadata>
     result.offsets = this.offsets != null ? this.offsets.clone() : new SongOffsets(); // if no song offsets found (aka null), so just create new ones
     result.timeChanges = this.timeChanges.deepClone();
     result.looped = this.looped;
+    result.noCamMovement = this.noCamMovement;
     result.playData = this.playData.clone();
     result.generatedBy = this.generatedBy;
 
@@ -353,6 +359,10 @@ class SongMusicData implements ICloneable<SongMusicData>
   @:default(false)
   public var looped:Null<Bool>;
 
+  @:optional
+  @:default(false)
+  public var noCamMovement:Null<Bool>;
+
   // @:default(funkin.data.song.SongRegistry.DEFAULT_GENERATEDBY)
   public var generatedBy:String;
 
@@ -377,6 +387,7 @@ class SongMusicData implements ICloneable<SongMusicData>
     this.divisions = null;
     this.timeChanges = [new SongTimeChange(0, 100)];
     this.looped = false;
+    this.noCamMovement = false;
     this.generatedBy = SongRegistry.DEFAULT_GENERATEDBY;
     // Variation ID.
     this.variation = variation == null ? Constants.DEFAULT_VARIATION : variation;
@@ -396,6 +407,7 @@ class SongMusicData implements ICloneable<SongMusicData>
     result.divisions = this.divisions;
     result.timeChanges = this.timeChanges.clone();
     result.looped = this.looped;
+    result.noCamMovement = this.noCamMovement;
     result.generatedBy = this.generatedBy;
 
     return result;

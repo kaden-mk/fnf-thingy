@@ -1,5 +1,6 @@
 package funkin.play.song;
 
+import funkin.HelperFunctions;
 import funkin.audio.VoicesGroup;
 import funkin.audio.FunkinSound;
 import funkin.data.IRegistryEntry;
@@ -53,6 +54,11 @@ class Song implements IPlayStateScriptedClass implements IRegistryEntry<SongMeta
    * The default value for whether the song loops.
    */
   public static final DEFAULT_LOOPED:Bool = false;
+
+  /**
+   * The default value for whether the song has camera movement.
+   */
+  public static final DEFAULT_NOCAMMOVEMENT:Bool = false;
 
   /**
    * The default value for the song's playable stage.
@@ -113,6 +119,8 @@ class Song implements IPlayStateScriptedClass implements IRegistryEntry<SongMeta
     if (_metadata.size() > 0) return _metadata.get(Constants.DEFAULT_VARIATION)?.songName ?? DEFAULT_SONGNAME;
     return DEFAULT_SONGNAME;
   }
+
+
 
   /**
    * The artist of the song.
@@ -303,6 +311,10 @@ class Song implements IPlayStateScriptedClass implements IRegistryEntry<SongMeta
         difficulty.noteStyle = metadata.playData.noteStyle;
 
         difficulty.characters = metadata.playData.characters;
+        difficulty.noCamMovement = metadata.noCamMovement;
+        
+        //if (metadata.exists("noCamMovement"))
+        //  difficulty.noCamMovement = metadata.noCamMovement;
 
         var variationSuffix = (metadata.variation != Constants.DEFAULT_VARIATION) ? '-${metadata.variation}' : '';
         difficulties.set('$diffId$variationSuffix', difficulty);
@@ -358,6 +370,7 @@ class Song implements IPlayStateScriptedClass implements IRegistryEntry<SongMeta
           difficulty.divisions = metadata.divisions;
           difficulty.timeChanges = metadata.timeChanges;
           difficulty.looped = metadata.looped;
+          difficulty.noCamMovement = metadata.noCamMovement;
           difficulty.generatedBy = metadata.generatedBy;
           difficulty.offsets = metadata?.offsets ?? new SongOffsets();
 
@@ -614,6 +627,7 @@ class SongDifficulty
   public var timeFormat:SongTimeFormat = Constants.DEFAULT_TIMEFORMAT;
   public var divisions:Null<Int> = null;
   public var looped:Bool = false;
+  public var noCamMovement:Bool = false;
   public var offsets:SongOffsets = new SongOffsets();
   public var generatedBy:String = SongRegistry.DEFAULT_GENERATEDBY;
 
