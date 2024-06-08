@@ -2247,7 +2247,7 @@ class PlayState extends MusicBeatSubState
         {
           case 0:
             // left
-            cameraFollowPoint.setPosition(dad.x + cameraOffsetNumber, dad.y);
+            cameraFollowPoint.setPosition(dad.x - cameraOffsetNumber, dad.y);
           case 1:
             // down
             cameraFollowPoint.setPosition(dad.x, dad.y + cameraOffsetNumber);
@@ -2256,7 +2256,7 @@ class PlayState extends MusicBeatSubState
             cameraFollowPoint.setPosition(dad.x, dad.y - cameraOffsetNumber);
           case 3:
             // right
-            cameraFollowPoint.setPosition(dad.x - cameraOffsetNumber, dad.y);
+            cameraFollowPoint.setPosition(dad.x + cameraOffsetNumber, dad.y);
         }
       }
       else if (Conductor.instance.songPosition > hitWindowStart)
@@ -2584,7 +2584,7 @@ class PlayState extends MusicBeatSubState
     {
       case 0:
         // left
-        cameraFollowPoint.setPosition(bf.x + cameraOffsetNumber, bf.y);
+        cameraFollowPoint.setPosition(bf.x - cameraOffsetNumber, bf.y);
       case 1:
         // down
         cameraFollowPoint.setPosition(bf.x, bf.y + cameraOffsetNumber);
@@ -2593,7 +2593,7 @@ class PlayState extends MusicBeatSubState
         cameraFollowPoint.setPosition(bf.x, bf.y - cameraOffsetNumber);
       case 3:
         // right
-        cameraFollowPoint.setPosition(bf.x - cameraOffsetNumber, bf.y);
+        cameraFollowPoint.setPosition(bf.x + cameraOffsetNumber, bf.y);
     }
   }
 
