@@ -1817,7 +1817,8 @@ class PlayState extends MusicBeatSubState
     add(opponentStrumline);
 
     // Position the player strumline on the right half of the screen
-    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Preferences.playAsOpponent ? Constants.STRUMLINE_X_OFFSET : FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET; // Classic style
+    playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Preferences.playAsOpponent ? Constants.STRUMLINE_X_OFFSET : FlxG.width / 2
+      + Constants.STRUMLINE_X_OFFSET; // Classic style
     // playerStrumline.x = FlxG.width - playerStrumline.width - Constants.STRUMLINE_X_OFFSET; // Centered style
 
     playerStrumline.y = Preferences.downscroll ? FlxG.height - playerStrumline.height - Constants.STRUMLINE_Y_OFFSET : Constants.STRUMLINE_Y_OFFSET;
@@ -1836,12 +1837,6 @@ class PlayState extends MusicBeatSubState
     opponentStrumline.y = Preferences.downscroll ? FlxG.height - opponentStrumline.height - Constants.STRUMLINE_Y_OFFSET : Constants.STRUMLINE_Y_OFFSET;
     opponentStrumline.zIndex = 1000;
     opponentStrumline.cameras = [camHUD];
-
-    if (Preferences.playAsOpponent)
-    {
-      playerStrumline.x = Preferences.middlescroll ? FlxG.width / 2 - playerStrumline.width / 2 : Constants.STRUMLINE_X_OFFSET;
-      opponentStrumline.x = FlxG.width / 2 + Constants.STRUMLINE_X_OFFSET;
-    }
 
     if (!PlayStatePlaylist.isStoryMode)
     {
@@ -2659,8 +2654,10 @@ class PlayState extends MusicBeatSubState
           });
       }
     }
-    if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
-    //vocals.playerVolume = 0;
+    if (Preferences.playAsOpponent) vocals.opponentVolume = 0;
+    else
+      vocals.playerVolume = 0;
+    // vocals.playerVolume = 0;
 
     Highscore.tallies.missed++;
 
@@ -2673,8 +2670,10 @@ class PlayState extends MusicBeatSubState
 
     if (playSound)
     {
-      if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
-      //vocals.playerVolume = 0;
+      if (Preferences.playAsOpponent) vocals.opponentVolume = 0;
+      else
+        vocals.playerVolume = 0;
+      // vocals.playerVolume = 0;
       FunkinSound.playOnce(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.5, 0.6));
     }
 
@@ -2731,8 +2730,10 @@ class PlayState extends MusicBeatSubState
 
     if (event.playSound)
     {
-      if (Preferences.playAsOpponent) vocals.opponentVolume = 0; else vocals.playerVolume = 0;
-      //vocals.playerVolume = 0;
+      if (Preferences.playAsOpponent) vocals.opponentVolume = 0;
+      else
+        vocals.playerVolume = 0;
+      // vocals.playerVolume = 0;
       FunkinSound.playOnce(Paths.soundRandom('missnote', 1, 3), FlxG.random.float(0.1, 0.2));
     }
   }
