@@ -196,6 +196,11 @@ class PlayState extends MusicBeatSubState
   public var deathCounter:Int = 0;
 
   /**
+   * the number for when hitting a note or some shit
+   */
+  var cameraOffsetNumber:Int = 10;
+
+  /**
    * The player's current health.
    */
   public var health:Float = Constants.HEALTH_STARTING;
@@ -218,6 +223,11 @@ class PlayState extends MusicBeatSubState
    * @default `1.0` for normal speed.
    */
   public var playbackRate:Float = 1.0;
+
+  /**
+   * Simple accuracy.
+   */
+  public var accuracy:Float = 0.00;
 
   /**
    * An empty FlxObject contained in the scene.
