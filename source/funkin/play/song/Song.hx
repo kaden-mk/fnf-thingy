@@ -120,8 +120,6 @@ class Song implements IPlayStateScriptedClass implements IRegistryEntry<SongMeta
     return DEFAULT_SONGNAME;
   }
 
-
-
   /**
    * The artist of the song.
    */
@@ -312,8 +310,8 @@ class Song implements IPlayStateScriptedClass implements IRegistryEntry<SongMeta
 
         difficulty.characters = metadata.playData.characters;
         difficulty.noCamMovement = metadata.noCamMovement;
-        
-        //if (metadata.exists("noCamMovement"))
+
+        // if (metadata.exists("noCamMovement"))
         //  difficulty.noCamMovement = metadata.noCamMovement;
 
         var variationSuffix = (metadata.variation != Constants.DEFAULT_VARIATION) ? '-${metadata.variation}' : '';
@@ -696,9 +694,9 @@ class SongDifficulty
     FlxG.sound.cache(getInstPath(instrumental));
   }
 
-  public function playInst(volume:Float = 1.0, looped:Bool = false):Void
+  public function playInst(volume:Float = 1.0, instId:String = '', looped:Bool = false):Void
   {
-    var suffix:String = (variation != null && variation != '' && variation != 'default') ? '-$variation' : '';
+    var suffix:String = (instId != '') ? '-$instId' : '';
 
     FlxG.sound.music = FunkinSound.load(Paths.inst(this.song.id, suffix), volume, looped, false, true);
 

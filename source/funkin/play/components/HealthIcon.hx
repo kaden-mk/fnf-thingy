@@ -54,7 +54,7 @@ class HealthIcon extends FunkinSprite
   /**
    * Apply the "bop" animation once every X steps.
    */
-  public var bopEvery:Int = 4;
+  public var bopEvery:Int = Constants.STEPS_PER_BEAT;
 
   /**
    * The amount, in degrees, to rotate the icon by when boping.

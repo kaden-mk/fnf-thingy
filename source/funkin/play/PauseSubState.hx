@@ -392,6 +392,7 @@ class PauseSubState extends MusicBeatSubState
     var delay:Float = 0.1;
     for (child in metadata.members)
     {
+      child.alpha = 0;
       FlxTween.tween(child, {alpha: 1, y: child.y + 5}, 1.8, {ease: FlxEase.quartOut, startDelay: delay});
       delay += 0.1;
     }
@@ -449,12 +450,13 @@ class PauseSubState extends MusicBeatSubState
    */
   function changeSelection(change:Int = 0):Void
   {
-    FunkinSound.playOnce(Paths.sound('scrollMenu'), 0.4);
-
+    var prevEntry:Int = currentEntry;
     currentEntry += change;
 
     if (currentEntry < 0) currentEntry = currentMenuEntries.length - 1;
     if (currentEntry >= currentMenuEntries.length) currentEntry = 0;
+
+    if (currentEntry != prevEntry) FunkinSound.playOnce(Paths.sound('scrollMenu'), 0.4);
 
     for (entryIndex in 0...currentMenuEntries.length)
     {

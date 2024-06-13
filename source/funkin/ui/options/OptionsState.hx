@@ -25,6 +25,8 @@ class OptionsState extends MusicBeatState
 
   override function create():Void
   {
+    persistentUpdate = true;
+
     var menuBG = new FlxSprite().loadGraphic(Paths.image('menuBG'));
     var hsv = new HSVShader();
     hsv.hue = -0.6;
@@ -59,8 +61,6 @@ class OptionsState extends MusicBeatState
       setPage(Controls);
     }
 
-    // disable for intro transition
-    currentPage.enabled = false;
     super.create();
   }
 
@@ -88,13 +88,6 @@ class OptionsState extends MusicBeatState
       currentPage.exists = true;
       currentPage.visible = true;
     }
-  }
-
-  override function finishTransIn()
-  {
-    super.finishTransIn();
-
-    currentPage.enabled = true;
   }
 
   function switchPage(name:PageName)
@@ -203,7 +196,7 @@ class OptionsMenu extends Page
     createItem("INPUT OFFSETS", function() {
       FlxG.state.openSubState(new LatencyState());
     });
-    createItem("CUSTOMISE UI", function() switchPage(CustomizeUi));
+    createItem("CUSTOMIZE UI", function() switchPage(CustomizeUi));
 
     #if newgrounds
     if (NGio.isLoggedIn) createItem("LOGOUT", selectLogout);
@@ -276,13 +269,13 @@ class OptionsMenu extends Page
   #end
 }
 
-enum PageName
+enum abstract PageName(String)
 {
-  Options;
-  Controls;
-  Colors;
-  Mods;
-  Preferences;
-  DisableUi;
-  CustomizeUi;
+  var Options = "options";
+  var Controls = "controls";
+  var Colors = "colors";
+  var Mods = "mods";
+  var Preferences = "preferences";
+  var DisableUi = "disableui";
+  var CustomizeUi = "customizeui";
 }

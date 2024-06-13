@@ -351,7 +351,7 @@ class BaseCharacter extends Bopper
     super.onUpdate(event);
 
     // Reset hold timer for each note pressed.
-    if (justPressedNote() && this.characterType == BF)
+    if (justPressedNote() && this.characterType == (Preferences.playAsOpponent ? DAD : BF))
     {
       holdTimer = 0;
     }
@@ -388,7 +388,7 @@ class BaseCharacter extends Bopper
 
       // Without this check here, the player character would only play the `sing` animation
       // for one beat, as opposed to holding it as long as the player is holding the button.
-      var shouldStopSinging:Bool = (this.characterType == BF) ? !isHoldingNote() : true;
+      var shouldStopSinging:Bool = (this.characterType == (Preferences.playAsOpponent ? DAD : BF)) ? !isHoldingNote() : true;
 
       FlxG.watch.addQuick('singTimeSec-${characterId}', singTimeSec);
       if (holdTimer > singTimeSec && shouldStopSinging)
